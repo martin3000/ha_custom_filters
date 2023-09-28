@@ -35,6 +35,7 @@ reach                       - Get a dict item by full path of key(s), with optio
 ternary                     - Returns one value if true, another if false, and third if null [e.g. `ternary(("a" == "b"), "Y", "N", "U")` => "`N`"]
 shuffle                     - Randomize an existing list, giving a different order every invocation [e.g. `shuffle([1,2,3])` => `[2,1,3]`]
 to_ascii_json               - Convert string to ASCII JSON
+natsort                     - Sort strings in a natural way ( ['10%','3%','100%','55%']|natsort => ['3%', '10%', '55%', '100%'] )
 ```
 
 </p>
