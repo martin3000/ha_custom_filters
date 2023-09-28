@@ -252,6 +252,22 @@ def to_ascii_json(string):
     """Convert string to ASCII JSON"""
     return json.dumps(string, ensure_ascii=False)
 
+def natsort_filter(val, reverse=False, ignore_case=True, attribute=None):
+    """natural sort"""
+    from natsort import natsorted, ns   # pylint: disable=import-outside-toplevel
+    from operator import attrgetter     # pylint: disable=import-outside-toplevel
+
+    if not ignore_case:
+        alg = ns.LOWERCASEFIRST
+    else:
+        alg = ns.IGNORECASE
+
+    if attribute:
+        key=attrgetter(attribute)
+    else:
+        key=None
+
+    return natsorted(val, reverse=reverse, alg=alg, key=key)
 
 
 def init(*args):
@@ -293,6 +309,7 @@ def init(*args):
     env.globals["ternary"] = ternary
     env.globals["shuffle"] = shuffle
     env.globals["to_ascii_json"] = to_ascii_json
+    env.globals["natsort"] = natsort_filter
     return env
 
 
@@ -333,6 +350,7 @@ template._NO_HASS_ENV.globals["reach"] = reach
 template._NO_HASS_ENV.globals["ternary"] = ternary
 template._NO_HASS_ENV.globals["shuffle"] = shuffle
 template._NO_HASS_ENV.globals["to_ascii_json"] = to_ascii_json
+template._NO_HASS_ENV.globals["natsort"] = natsort_filter
 
 
 async def async_setup(hass, hass_config):
@@ -355,4 +373,5 @@ async def async_setup(hass, hass_config):
     tpl._env.globals = ternary
     tpl._env.globals = shuffle
     tpl._env.globals = to_ascii_json
+    tpl._env.globals = natsort_filter
     return True
